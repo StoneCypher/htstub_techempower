@@ -1,18 +1,20 @@
 
 %%%%%%%%%
 %%
-%%  @doc htte_t2_mnesia - htstub_techempower test 2 implementation
+%%  @doc htte_t2_mnesia_raw - htstub_techempower test 2 implementation
 %%
 %%  This is a set of HtStub implementations of the 
 %%  <a href="http://www.techempower.com/benchmarks/">TechEmpower Web Framework Benchmarks</a>.
 %%
 %%  Test 2: Single Database Query - Mnesia edition
+%%
+%%  This implementation does not use an ORM and therefore should be marked "raw" under test 2 rules.
 
 
 
 
 
--module(htte_t2_mnesia).
+-module(htte_t2_mnesia_raw).
 
 
 
@@ -35,7 +37,17 @@
 
 -record(htte_t2_mnesia_store, {
 
+    todo
+
 }).
+
+
+
+
+
+start() ->
+
+    todo.
 
 
 
@@ -57,11 +69,16 @@ init() ->
             { error, already_init };
 
         false ->
-            mnesia:create_table(htte_t2_mnesia_store, [
-                { access_mode, read_write },
-                { disc_copies, [node()]   },
 
-            ])
+            mnesia:create_table(htte_t2_mnesia_store, [
+
+                { access_mode, read_write           },
+                { disc_copies, [node()]             },
+                { record_name, htte_t2_mnesia_store }
+
+            ]),
+
+            todo
 
     end.
 
