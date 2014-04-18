@@ -8,20 +8,41 @@
 %%
 %%  Test 1: JSON Serialization
 
+
+
+
+
+-module(htte_t1).
+
+
+
+
+
+-export([
+    serve/0
+]).
+
+
+
+
+
 serve() ->
 
     htstub:serve(fun(_) -> 
 
-        Response = <<"{\"message\":\"Hello, World!\"}">>,
+        % the contest requires the json to be dynamically generated
+        Response = crap_json:to_json([ {<<"message">>, <<"Hello, World!">>} ]),
 
-        { 200, 
+        {   200, 
 
-          [ { "Date",           htstub:standard_datestring()             },
-            { "Content-Type",   "text/html"                       },
-            { "Content-Length", integer_to_list(length(Response)) }
-          ], 
+            [   { "Date",           htstub:standard_datestring()             },
+                { "Server",         htstub:standard_datestring()             },
+                { "Content-Type",   "application/json"                       },
+                { "Server",         "htstub"                                 },
+                { "Content-Length", integer_to_list(size(Response))          }
+            ], 
 
-          Response
+            Response
 
         } 
 
