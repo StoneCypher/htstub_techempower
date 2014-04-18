@@ -26,6 +26,8 @@
 
 
 
+%% todo "/json"
+
 serve() ->
 
     htstub:serve(fun(_) -> 
@@ -35,11 +37,10 @@ serve() ->
 
         {   200, 
 
-            [   { "Date",           htstub:standard_datestring()             },
-                { "Server",         htstub:standard_datestring()             },
-                { "Content-Type",   "application/json"                       },
-                { "Server",         "htstub"                                 },
-                { "Content-Length", integer_to_list(size(Response))          }
+            [   { "Date",           htstub:standard_datestring()    },
+                { "Content-Type",   "application/json"              },
+                { "Server",         "htstub"                        },
+                { "Content-Length", integer_to_list(size(Response)) }
             ], 
 
             Response
