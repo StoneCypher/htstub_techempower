@@ -33,9 +33,37 @@
 
 
 
+-record(htte_t2_mnesia_store, {
+
+}).
+
+
+
+
+
 is_already_init() ->
 
     false.
+
+
+
+
+
+init() ->
+
+    case is_already_init() of
+
+        true ->
+            { error, already_init };
+
+        false ->
+            mnesia:create_table(htte_t2_mnesia_store, [
+                { access_mode, read_write },
+                { disc_copies, [node()]   },
+
+            ])
+
+    end.
 
 
 
