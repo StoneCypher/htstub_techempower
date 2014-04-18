@@ -35,10 +35,9 @@
 
 
 
--record(htte_t2_mnesia_store, {
-
-    todo
-
+-record(htte_t2_mnesia_store_raw, {
+    id,
+    rnd
 }).
 
 
@@ -47,7 +46,7 @@
 
 start() ->
 
-    todo.
+    application:start(mnesia).
 
 
 
@@ -70,15 +69,25 @@ init() ->
 
         false ->
 
-            mnesia:create_table(htte_t2_mnesia_store, [
+            mnesia:transaction(fun() ->
 
-                { access_mode, read_write           },
-                { disc_copies, [node()]             },
-                { record_name, htte_t2_mnesia_store }
+                mnesia:create_table(htte_t2_mnesia_store_raw, [
 
-            ]),
+                    { access_mode, read_write           },
+                    { disc_copies, [node()]             },
+                    { record_name, htte_t2_mnesia_store }
 
-            todo
+                ]),
+
+                [
+                    mnesia:write(#htte_t2_mnesia_store_raw{
+                        id=Id,
+                        rnd=sc:rand(99999)
+                    })
+                ||
+                    Id <- lists:seq(1, 10000)
+                ]
+            end)
 
     end.
 
