@@ -36,8 +36,10 @@
 
 
 -record(htte_t2_mnesia_store_raw, {
+
     id,
     rnd
+
 }).
 
 
@@ -71,11 +73,12 @@ init() ->
 
             mnesia:transaction(fun() ->
 
-                mnesia:create_table(htte_t2_mnesia_store_raw, [
+                { atomic, ok } = mnesia:create_table(htte_t2_mnesia_store_raw, [
 
-                    { access_mode, read_write           },
-                    { disc_copies, [node()]             },
-                    { record_name, htte_t2_mnesia_store }
+                    { type,        set                      },
+                    { access_mode, read_write               },
+                    { disc_copies, [node()]                 },
+                    { record_name, htte_t2_mnesia_store_raw }
 
                 ]),
 
